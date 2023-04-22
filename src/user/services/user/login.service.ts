@@ -33,6 +33,8 @@ export default class LoginUserService {
         statusCode: 200,
         body: {
           message: "Login successfully",
+          isAdmin: existEmail.isAdmin ? "ADMIN" : "USER",
+          id: existEmail.id,
           token,
         },
       };

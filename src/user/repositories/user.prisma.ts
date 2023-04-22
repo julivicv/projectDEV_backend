@@ -5,6 +5,24 @@ import UserRepos from "../user.repos";
 const prisma = new PrismaClient();
 
 export default class UserPrismaRepos implements UserRepos {
+  async findByCard(id: string): Promise<UserDTO | null> {
+    return await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        class: {
+          include: {
+            Couser: {
+              include: {
+                educationLevel: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
   async create(data: UserDTO): Promise<UserDTO> {
     return await prisma.user.create({
       data: {
@@ -48,6 +66,18 @@ export default class UserPrismaRepos implements UserRepos {
       where: {
         id,
       },
+      include: {
+        class: {
+          include: {
+            Couser: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
     return user;
   }
@@ -68,7 +98,7 @@ export default class UserPrismaRepos implements UserRepos {
             Couser: {
               select: {
                 name: true,
-              },  
+              },
             },
           },
         },

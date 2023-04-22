@@ -18,7 +18,7 @@ const seeds = async () => {
     );
 
     const course = await coursePrismaRepos.createCourse({
-      name: "ADMINISTRAÇÃO12",
+      name: "ADMINISTRAÇÃO",
       educationLevelId: educationLevel.id as any,
     });
 
@@ -27,7 +27,6 @@ const seeds = async () => {
       couserId: course.id as any,
       lunch: JSON.stringify(["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"]),
     });
-    console.log(classRoom);
 
     const service = new CreateUserService(UserRepos, classRoomRepos);
 
@@ -42,10 +41,6 @@ const seeds = async () => {
       classId: classRoom.couserId,
     });
     console.log(response.body);
-  } catch (error: any) {
-    console.log(`
-  ${error.message}
-  `);
-  }
+  } catch (error: any) {}
 };
 seeds();

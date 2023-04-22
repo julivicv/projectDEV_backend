@@ -9,6 +9,11 @@ export default class CreateUser {
       res.status(400).json({ message: "unauthorized for this function" });
     }
     const { name, dateOfBirth, email, password, photoFile, classId } = req.body;
+    const file = {
+      file: req.file?.buffer,
+      filename: req.file?.originalname,
+      mimetype: req.file?.mimetype,
+    };
 
     const repos = new UserPrismaRepos();
     const classRoomRepos = new ClassRoomPrismaRepos();
@@ -16,10 +21,10 @@ export default class CreateUser {
     const response = await service.create({
       isActived: true,
       name,
-      dateOfBirth,
+      dateOfBirth: new Date(Date.now()),
       email,
       password,
-      photoFile,
+      photoFile: file.file?.toString("base64"),
       isAdmin: false,
       classId,
     });
