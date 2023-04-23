@@ -11,6 +11,7 @@ export default class CreateUserService {
   constructor(userRepos: UserRepos, classRoomRepos: ClassRoomRepos) {
     this.userRepos = userRepos;
     this.classRoomRepos = classRoomRepos;
+    console.log("HAHAHAHA")
   }
   private validate(user: UserDTO) {
     if (!user.name) {
